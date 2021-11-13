@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const {dbConnection} = require("./db/config");
 require('dotenv').config();
 
@@ -21,6 +22,10 @@ app.use( express.json() );
 // Routes
 app.use( '/api/auth', require('./routes/auth'));
 
+// Manage other routes
+app.get('*', (req, resp) => {
+    resp.sendFile( path.resolve(__dirname, 'public/index.html'));
+});
 
 app.listen( process.env.PORT , () => {
     console.log(`Server running on port: ${ process.env.PORT }`)
